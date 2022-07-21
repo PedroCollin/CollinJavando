@@ -10,34 +10,36 @@ import javax.imageio.ImageIO;
 public class GeradoraDeFigurinhas {
     
 
-
-    public void cria(InputStream inputStream, String nomeArqv) throws Exception{
-
-        // Read a image
-        // InputStream inputStream = new FileInputStream("entrada/filme.jpg");
-        // InputStream inputStream = new URL("https://imersao-java-apis.s3.amazonaws.com/TopMovies_1.jpg").openStream();
+    public void cria(InputStream inputStream, String nomeArquivo) throws Exception {
+      
+        // leitura da imagem
+        // InputStream inputStream = 
+        //             new FileInputStream(new File("entrada/filme-maior.jpg"));
+        // InputStream inputStream = 
+        //                 new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg")
+        //                 .openStream();
         BufferedImage imagemOriginal = ImageIO.read(inputStream);
 
-        // Create a image in memory at transparent and new size
-        int width = imagemOriginal.getWidth();
-        int height = imagemOriginal.getHeight();
-        int newSize = height + 200;
-        BufferedImage newImage = new BufferedImage(width, newSize, BufferedImage.TRANSLUCENT);
+        // cria nova imagem em memória com transparência e com tamanho novo
+        int largura = imagemOriginal.getWidth();
+        int altura = imagemOriginal.getHeight();
+        int novaAltura = altura + 200;
+        BufferedImage novaImagem = new BufferedImage(largura, novaAltura, BufferedImage.TRANSLUCENT);
 
-        // copy a default image to new memory image
-        Graphics2D graphics = (Graphics2D) newImage.getGraphics();
+        // copiar a imagem original pra novo imagem (em memória)
+        Graphics2D graphics = (Graphics2D) novaImagem.getGraphics();
         graphics.drawImage(imagemOriginal, 0, 0, null);
 
-        // Set Font text
-        var font = new Font(Font.SANS_SERIF, Font.BOLD, 64);
-        graphics.setColor(Color.MAGENTA);
-        graphics.setFont(font);
+        // configurar a fonte
+        var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 64);
+        graphics.setColor(Color.YELLOW);
+        graphics.setFont(fonte);
 
-        // write a text
-        graphics.drawString("NAOTOINTENDENDO", 0, newSize-100);
+        // escrever uma frase na nova imagem
+        graphics.drawString("TOPZERA", 100, novaAltura - 100);
 
-        // Write a new image in a file
-        ImageIO.write(newImage, "png", new File(nomeArqv));
+        // escrever a nova imagem em um arquivo
+        ImageIO.write(novaImagem, "png", new File(nomeArquivo));
 
     }
 
