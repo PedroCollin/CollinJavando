@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -12,7 +14,7 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         // Connect to HTTP Url and GET data
-        String url = "https://imdb-api.com/en/API/Top250Movies/k_o1s5vy3i";
+        String url = "https://api.mocki.io/v2/549a5d8b/Top250Movies";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(endereco).GET().build();
@@ -28,9 +30,17 @@ public class App {
         
         // Show data 
         for (Map<String,String> filme : listaDeFilmes) {
-            System.out.println(filme.get("title"));
-            System.out.println(filme.get("year"));
-            System.out.println(filme.get("imDbRating"));
+
+            String urlImagem = filme.get("image");
+            String titulo = filme.get("title");
+            
+            InputStream inputStream = new URL(urlImagem).openStream();
+            String nomeArqv = "saida/" + titulo + ".png";
+
+            var geradora = new GeradoraDeFigurinhas();
+            geradora.cria(inputStream, nomeArqv);
+
+            System.out.println(titulo);
             System.out.println();
             
         }
